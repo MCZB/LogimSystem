@@ -24,8 +24,8 @@ if (!$user) {
 $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST["username"];
-    $email = $_POST["email"];
+    $username = htmlspecialchars($_POST["username"]);
+    $email = htmlspecialchars($_POST["email"]);
     $password = $_POST["password"];
 
     if (password_verify($password, $user["password"])) {
@@ -53,17 +53,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h1 class="mt-5">Editar Perfil</h1>
         <?php if ($error): ?>
             <div class="alert alert-danger" role="alert">
-                <?= $error ?>
+                <?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>
             </div>
         <?php endif; ?>
         <form action="edit_profile.php" method="post">
             <div class="form-group">
                 <label for="username">Nome de usuário:</label>
-                <input type="text" class="form-control" name="username" id="username" value="<?= $user["username"] ?>">
+                <input type="text" class="form-control" name="username" id="username" value="<?= htmlspecialchars($user["username"], ENT_QUOTES, 'UTF-8') ?>">
             </div>
             <div class="form-group">
                 <label for="email">E-mail:</label>
-                <input type="email" class="form-control" name="email" id="email" value="<?= $user["email"] ?>">
+                <input type="email" class="form-control" name="email" id="email" value="<?= htmlspecialchars($user["email"], ENT_QUOTES, 'UTF-8') ?>">
             </div>
             <div class="form-group">
                 <label for="password">Digite sua senha para confirmar as alterações:</label>
