@@ -22,7 +22,7 @@
 * Histórico de login para monitoramento de atividades de usuários.
 
 ## Melhorias
-# Este sistema de login básico pode ser melhorado com recursos adicionais, como:
+### Este sistema de login básico pode ser melhorado com recursos adicionais, como:
 
 * Recuperação de senha por e-mail.
 * Verificação de e-mail para novas contas de usuário.
