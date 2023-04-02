@@ -31,7 +31,7 @@ if (!$user) {
 </head>
 <body>
     <div class="container">
-        <h1 class="mt-5">Bem-vindo, <?= $user["username"] ?>!</h1>
+    <h1 class="mt-5">Bem-vindo, <?= htmlspecialchars($user["username"], ENT_QUOTES, 'UTF-8') ?>!</h1>
         <p class="mt-3"><a class="btn btn-primary" href="logout.php">Sair</a></p>
         <p class="mt-3"><a class="btn btn-primary" href="edit_profile.php">Editar perfil</a></p>
     </div>

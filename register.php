@@ -10,10 +10,10 @@ if (isset($_POST["submit"])) {
     require_once "db_config.php";
     require_once "db_config.php";
 
-    $username = $_POST["username"];
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-    $confirm_password = $_POST["confirm_password"];
+    $username = htmlspecialchars($_POST["username"]);
+    $email = htmlspecialchars($_POST["email"]);
+    $password = htmlspecialchars($_POST["password"]);
+    $confirm_password = htmlspecialchars($_POST["confirm_password"]);
 
     // Verifica se a senha e a confirmação de senha são iguais
     if ($password !== $confirm_password) {
@@ -94,8 +94,9 @@ if (isset($_POST["submit"])) {
                 <label for="confirm_password" class="form-label">Confirme sua senha:</label>
                 <input type="password" class="form-control" name="confirm_password" required>
             </div>
-                <button type="submit" class="btn btn-primary" name="submit">Registrar</button>
+            <button type="submit" class="btn btn-primary" name="submit">Registrar</button>
         </form>
     </div>
 </body>
 </html>
+
