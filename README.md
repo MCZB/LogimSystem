@@ -18,7 +18,8 @@
 * Autenticação de usuários com nome de usuário e senha armazenados no banco de dados.<br>
 * Gerenciamento de sessão para manter o usuário autenticado em todas as páginas do site.<br>
 * Verificação de erros de login e exibição de mensagens de erro apropriadas.<br>
-* Opção de criar uma conta de usuário para novos usuários.<br>
+* Opção de criar uma conta de usuário para novos usuários.<br
+* Histórico de login para monitoramento de atividades de usuários.<br>
 
 ## Melhorias<br>
 * Este sistema de login básico pode ser melhorado com recursos adicionais, como:<br>
@@ -26,7 +27,6 @@
 * Recuperação de senha por e-mail.<br>
 * Verificação de e-mail para novas contas de usuário.<br>
 * Verificação em duas etapas para autenticação de usuários.<br>
-* Histórico de login para monitoramento de atividades de usuários.<br>
 * Notificações de login para usuários para detectar atividades suspeitas.<br>
 * Implementação de proteção contra ataques de injeção SQL e outras vulnerabilidades de segurança.<br>
 
