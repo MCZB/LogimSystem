@@ -1,38 +1,50 @@
 <?php
+// Inicia uma nova sessão ou retoma a sessão existente
 session_start();
+
+// Inclui o arquivo que contém funções para lidar com tentativas de login
 include 'login_attempts.php';
 
-// Inicialize a variável de mensagem de erro como vazia
+// Inicializa a variável de mensagem de erro como vazia
 $error_message = "";
 
+// Verifica se o método da requisição é POST e se os campos de usuário e senha estão definidos
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["username"]) && isset($_POST["password"])) {
+    // Inclui o arquivo que contém a conexão com o banco de dados
     require_once "db_connection.php";
 
+    // Remove caracteres especiais e converte caracteres aplicáveis em entidades HTML
     $username = htmlspecialchars($_POST["username"], ENT_QUOTES, 'UTF-8');
     $password = htmlspecialchars($_POST["password"], ENT_QUOTES, 'UTF-8');
 
+    // Verifica se o usuário ainda tem tentativas de login disponíveis
     if (check_login_attempts($username, $conn)) {
+        // Prepara e executa uma consulta para selecionar o id e a senha do usuário com base no nome de usuário informado
         $stmt = $conn->prepare("SELECT id, password FROM users WHERE username = ?");
         $stmt->execute([$username]);
         $result = $stmt->fetch();
 
+        // Verifica se a consulta retornou algum resultado
         if ($result) {
+            // Verifica se a senha informada confere com a senha armazenada no banco de dados
             if (password_verify($password, $result["password"])) {
+                // Armazena o id do usuário na sessão
                 $_SESSION["user_id"] = $result["id"];
                 
-                // Inserir registro de login no banco de dados
+                // Insere um registro de login no banco de dados
                 $login_time = date("Y-m-d H:i:s");
                 $user_ip = $_SERVER["REMOTE_ADDR"];
                 $stmt = $conn->prepare("INSERT INTO login_history (user_id, login_time, user_ip) VALUES (?, ?, ?)");
                 $stmt->execute([$_SESSION["user_id"], $login_time, $user_ip]);
                 
-                // Registrar tentativa de login bem-sucedida
+                // Registra a tentativa de login bem-sucedida
                 log_login_attempt($username, 1, $conn);
 
+                // Redireciona o usuário para a página do painel
                 header("Location: dashboard.php");
                 exit();
             } else {
-                // Registrar tentativa de login malsucedida
+                // Registra a tentativa de login malsucedida
                 log_login_attempt($username, 0, $conn);
                 $error_message = "Usuário ou senha incorretos.";
             }
