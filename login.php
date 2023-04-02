@@ -17,6 +17,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["username"]) && isset($
     if ($result) {
         if (password_verify($password, $result["password"])) {
             $_SESSION["user_id"] = $result["id"];
+            
+            // Inserir registro de login no banco de dados
+            $login_time = date("Y-m-d H:i:s");
+            $user_ip = $_SERVER["REMOTE_ADDR"];
+            $stmt = $conn->prepare("INSERT INTO login_history (user_id, login_time, user_ip) VALUES (?, ?, ?)");
+            $stmt->execute([$_SESSION["user_id"], $login_time, $user_ip]);
+            
             header("Location: dashboard.php");
             exit();
         }
